@@ -4,7 +4,6 @@ import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import error from 'next/error'
 
 const claimUsernameFormSchema = z.object({
   username: z

@@ -57,6 +57,8 @@ export default function Register() {
         name: data.name,
         username: data.username,
       })
+
+      await router.push('/register/connect-calendar')
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data) {
         alert(err.response.data.error)
@@ -105,8 +107,8 @@ export default function Register() {
           )}
         </label>
 
-        <Button type="submit">
-          Próximo passo
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Carregando...' : 'Próximo passo'}
           <ArrowRight />
         </Button>
       </Form>

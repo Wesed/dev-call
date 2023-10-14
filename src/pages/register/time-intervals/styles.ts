@@ -13,7 +13,7 @@ export const IntervalContainer = styled('div', {
 })
 
 export const IntervalItem = styled('div', {
-  display: 'flex',
+  display: 'grid',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '$3 $4',
@@ -27,12 +27,14 @@ export const IntervalDay = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$3',
+  gridRow: 1,
 })
 
 export const IntervalInputs = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$2',
+  gridRow: 1,
 
   'input::-webkit-calendar-picker-indicator': {
     filter: 'invert(100%) brightness(40%)',
@@ -41,5 +43,8 @@ export const IntervalInputs = styled('div', {
 
 export const FormError = styled(Text, {
   color: '#f75a68',
-  marginBottom: '$4',
+  margin: '$2 0 0',
+  textAlign: 'center',
+  gridRow: 2,
+  gridColumn: 2,
 })

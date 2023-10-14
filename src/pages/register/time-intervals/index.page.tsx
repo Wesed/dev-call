@@ -21,6 +21,7 @@ import { getWeekDays } from '@/utils/get-week-days'
 import { ArrowRight } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { convertTimeToMinutes } from '@/utils/convert-time-to-minutes'
+import { api } from '@/lib/axios'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -92,9 +93,11 @@ export default function TimeIntervals() {
 
   async function handleSetTimeIntervals(data: any) {
     // afim de resolver um bug do react-hook-form com zod
-    const formData = data as TimeIntervalsFormOutput
-    
-    console.log('aa', data)
+    const { intervals } = data as TimeIntervalsFormOutput
+
+    await api.post('/users/time-intervals', {
+      intervals,
+    })
   }
 
   return (

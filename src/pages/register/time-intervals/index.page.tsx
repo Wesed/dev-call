@@ -167,10 +167,14 @@ export default function TimeIntervals() {
           <FormError size="sm">{errors.intervals.root?.message}</FormError>
         )}
 
-        <Button type="submit" disabled={isSubmitting}>
-          Próximo passo
-          <ArrowRight />
-        </Button>
+        {isSubmitting ? (
+          <Button disabled={isSubmitting}>Salvando...</Button>
+        ) : (
+          <Button type="submit" disabled={isSubmitting}>
+            Próximo passo
+            <ArrowRight />
+          </Button>
+        )}
       </IntervalBox>
     </Container>
   )

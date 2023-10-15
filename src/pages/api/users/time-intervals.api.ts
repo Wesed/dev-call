@@ -33,7 +33,7 @@ export default async function handler(
   if (!session) {
     return res.status(401).end()
   }
-  
+
   // o parse dispara um erro se o intervals nao for igual a interface
   const { intervals } = timeIntervalsBodySchema.parse(req.body)
 

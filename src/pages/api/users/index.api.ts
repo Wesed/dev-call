@@ -20,14 +20,16 @@ export default async function handler(
   })
 
   if (userExists) {
-    return res.status(400).json({ error: 'Username already taken.' })
+    return res
+      .status(400)
+      .json({ error: 'O nome de usuário não está disponível.' })
   }
 
   const user = await prisma.user.create({
     data: { name, username },
   })
 
-  /* os cookies trafegam atraves do header da resposta */
+  /* os cookies trafegam através do header da resposta */
   setCookie({ res }, '@dev-call:userId', user.id, {
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: '/',

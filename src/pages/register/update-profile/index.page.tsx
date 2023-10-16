@@ -46,7 +46,7 @@ export default function UpdateProfile() {
   async function handleNavigateToNextStep() {
     await router.push(`/schedule/${session.data?.user.username}`)
   }
-  
+
   return (
     <Container>
       <Header>

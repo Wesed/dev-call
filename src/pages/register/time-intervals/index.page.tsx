@@ -22,6 +22,9 @@ import { ArrowRight } from 'phosphor-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { convertTimeToMinutes } from '@/utils/convert-time-to-minutes'
 import { api } from '@/lib/axios'
+import { getServerSession } from 'next-auth'
+import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
+import { GetServerSideProps } from 'next'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -178,4 +181,27 @@ export default function TimeIntervals() {
       </IntervalBox>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOptions(req, res),
+  )
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/register/connect-calendar',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  }
 }

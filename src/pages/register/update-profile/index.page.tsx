@@ -2,7 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Container, Header } from '../styles'
-import { Button, Heading, MultiStep, Text, TextArea } from '@ignite-ui/react'
+import {
+  Avatar,
+  Button,
+  Heading,
+  MultiStep,
+  Text,
+  TextArea,
+} from '@ignite-ui/react'
 import { useSession } from 'next-auth/react'
 import { FormAnnotation, ProfileBox } from './styles'
 import { ArrowRight } from 'phosphor-react'
@@ -46,6 +53,10 @@ export default function UpdateProfile() {
       <ProfileBox as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
         <label>
           <Text>Foto de perfil</Text>
+          <Avatar
+            src={session.data?.user.avatar_url}
+            alt={session.data?.user.name}
+          />
         </label>
 
         <label>
@@ -71,6 +82,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     res,
     buildNextAuthOptions(req, res),
   )
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/register/connect-calendar',
+        permanent: false,
+      },
+    }
+  }
 
   return {
     props: {

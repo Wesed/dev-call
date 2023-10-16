@@ -25,6 +25,7 @@ import { api } from '@/lib/axios'
 import { getServerSession } from 'next-auth'
 import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -85,6 +86,8 @@ export default function TimeIntervals() {
     },
   })
 
+  const router = useRouter()
+
   const weekDays = getWeekDays()
 
   const { fields } = useFieldArray({
@@ -101,6 +104,10 @@ export default function TimeIntervals() {
     await api.post('/users/time-intervals', {
       intervals,
     })
+  }
+
+  async function handleNavigateToNextStep() {
+    await router.push('/register/update-profile')
   }
 
   return (
@@ -173,7 +180,11 @@ export default function TimeIntervals() {
         {isSubmitting ? (
           <Button disabled={isSubmitting}>Salvando...</Button>
         ) : (
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            onClick={handleNavigateToNextStep}
+            type="submit"
+            disabled={isSubmitting}
+          >
             Próximo passo
             <ArrowRight />
           </Button>

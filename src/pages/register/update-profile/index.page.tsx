@@ -16,6 +16,8 @@ import { ArrowRight } from 'phosphor-react'
 import { getServerSession } from 'next-auth'
 import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import { GetServerSideProps } from 'next'
+import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -33,11 +35,18 @@ export default function UpdateProfile() {
   })
 
   const session = useSession()
+  const router = useRouter()
 
   async function handleUpdateProfile(data: UpdateProfileData) {
-    return null
+    await api.put('/users/profile', {
+      bio: data.bio,
+    })
   }
 
+  async function handleNavigateToNextStep() {
+    await router.push(`/schedule/${session.data?.user.username}`)
+  }
+  
   return (
     <Container>
       <Header>
@@ -67,7 +76,11 @@ export default function UpdateProfile() {
           </FormAnnotation>
         </label>
 
-        <Button type="submit" disabled={isSubmitting}>
+        <Button
+          onClick={handleNavigateToNextStep}
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? 'Finalizando...' : 'Finalizar'}
           <ArrowRight />
         </Button>

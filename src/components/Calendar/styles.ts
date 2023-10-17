@@ -60,7 +60,7 @@ export const CalendarBody = styled('table', {
 
   'tbody:before': {
     content: '',
-    paddingBottom: '0;75rem',
+    paddingBottom: '0.75rem',
     display: 'block',
   },
 
@@ -77,6 +77,7 @@ export const CalendarDay = styled('button', {
   textAlign: 'center',
   cursor: 'pointer',
   borderRadius: '$sm',
+  transition: '.2s all',
 
   '&:disabled': {
     background: 'none',

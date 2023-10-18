@@ -31,8 +31,8 @@ export function Calendar() {
     /* nao permite que volte antes mes atual, pq nao faz sentido
        o usuario ter acesso aos meses retrocedentes */
     if (
-      dayjs().month() < currentDate.month() ||
-      dayjs().year() < currentDate.year()
+      dayjs().isBefore(currentDate, 'month') ||
+      dayjs().isBefore(currentDate, 'year')
     ) {
       const previousMonthDate = currentDate.subtract(1, 'month')
       setCurrentDate(previousMonthDate)

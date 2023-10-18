@@ -80,6 +80,7 @@ export const CalendarDay = styled('button', {
   cursor: 'pointer',
   borderRadius: '$sm',
   transition: '.2s all',
+  position: 'relative',
 
   '&:disabled': {
     background: 'none',
@@ -93,5 +94,23 @@ export const CalendarDay = styled('button', {
 
   '&:focus': {
     boxShadow: '0 0 0 2px $color$gray100',
+  },
+
+  variants: {
+    isToday: {
+      true: {
+        '&::before': {
+          content: "''",
+          position: 'absolute',
+          width: '$1',
+          height: '$1',
+          borderRadius: '$full',
+          top: '.8rem',
+          right: '50%',
+          transform: 'translate(50%, -50%)',
+          background: '$ignite500',
+        },
+      },
+    },
   },
 })

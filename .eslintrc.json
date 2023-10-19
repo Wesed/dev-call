@@ -2,5 +2,13 @@
   "extends": [
     "@rocketseat/eslint-config/next", 
     "next/core-web-vitals"
+  ],
+  "overrides": [
+  {
+    "files": ["*.api.ts"],
+    "rules": {
+      "camelcase": "off"
+    }
+  }
   ]
 }

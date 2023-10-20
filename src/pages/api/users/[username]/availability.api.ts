@@ -32,7 +32,7 @@ export default async function handler(
 
   // se a data estiver no passado, retorna um array vazio (sem disponibilidade)
   if (isPastDate) {
-    return res.status(200).json({ availability: [] })
+    return res.status(200).json({ possibleTimes: [], availability: [] })
   }
 
   // se o dia escolhido tiver disponibilidade
@@ -44,7 +44,7 @@ export default async function handler(
   })
 
   if (!userAvailability) {
-    return res.status(200).json({ availability: [] })
+    return res.status(200).json({ possibleTimes: [], availability: [] })
   }
 
   const { time_start_in_minutes, time_end_in_minutes } = userAvailability
@@ -76,5 +76,5 @@ export default async function handler(
     )
   })
 
-  return res.json({ possibleTimes, availableTimes, blockedTimes })
+  return res.json({ possibleTimes, availableTimes })
 }

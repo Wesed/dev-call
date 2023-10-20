@@ -65,14 +65,14 @@ export const TimePickerItem = styled('button', {
   lineHeight: '$base',
   transition: '.2s all',
 
-  '&:last-child': {
+  '&:nth-last-child(1), &:nth-last-child(2)': {
     marginBottom: '$6',
   },
 
   '&:disabled': {
-    background: 'none',
-    cursor: 'default',
+    background: '$gray700',
     opacity: 0.4,
+    cursor: 'not-allowed',
   },
 
   '&:not(:disabled):hover': {

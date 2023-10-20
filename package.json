@@ -14,6 +14,7 @@
     "@prisma/client": "^5.4.2",
     "@rocketseat/eslint-config": "^2.1.0",
     "@stitches/react": "^1.2.8",
+    "@tanstack/react-query": "^4.20.4",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "next": "13.5.4",

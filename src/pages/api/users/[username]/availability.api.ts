@@ -71,7 +71,7 @@ export default async function handler(
 
   // retorna somente os horários que nao estão no blockedTimes
   const availableTimes = possibleTimes.filter((time) => {
-    return !blockedTimes.some((blockedTime) => {
+    const isTimeBlocked = blockedTimes.some((blockedTime) => {
       const blockedHours = blockedTime.date.getHours()
       const blockedMinutes = blockedTime.date.getMinutes()
       const timeHours = Math.floor(time)
@@ -82,6 +82,11 @@ export default async function handler(
         (blockedMinutes === timeMinutes || blockedMinutes === timeMinutes + 30)
       )
     })
+
+    const isTimeInPast = referenceDate.set('hour', time).isBefore(new Date())
+
+    // so retorna horários disponíveis e que nao passaram
+    return !isTimeBlocked && !isTimeInPast
   })
 
   return res.json({ possibleTimes, availableTimes })

@@ -83,6 +83,10 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
   }
 
   const calendarWeeks = useMemo(() => {
+    if (!blockedDates) {
+      return []
+    }
+
     // retorna qts dias tem no mes atual
     const daysInMonthArray = Array.from({
       length: currentDate.daysInMonth(),
@@ -122,10 +126,9 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
       ...daysInMonthArray.map((date) => {
         return {
           date,
-          disabled: Boolean(
+          disabled:
             date.endOf('day').isBefore(new Date()) ||
-              blockedDates?.blockedWeekDays.includes(date.get('day')),
-          ),
+            blockedDates.blockedWeekDays.includes(date.get('day')),
           isToday: date.isSame(dayjs(), 'day'),
         }
       }),

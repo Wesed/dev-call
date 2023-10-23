@@ -71,10 +71,17 @@ export default async function handler(
 
   // retorna somente os horários que nao estão no blockedTimes
   const availableTimes = possibleTimes.filter((time) => {
-    return !blockedTimes.some(
-      (blockedTime) => blockedTime.date.getHours() === time,
-    )
+    return !blockedTimes.some((blockedTime) => {
+      const blockedHours = blockedTime.date.getHours()
+      const blockedMinutes = blockedTime.date.getMinutes()
+      return (
+        blockedHours === Math.floor(time) &&
+        (blockedMinutes === 0 || blockedMinutes === 30)
+      )
+    })
   })
+
+  console.log('aaaa', availableTimes)
 
   return res.json({ possibleTimes, availableTimes })
 }

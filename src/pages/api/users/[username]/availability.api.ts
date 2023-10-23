@@ -74,14 +74,15 @@ export default async function handler(
     return !blockedTimes.some((blockedTime) => {
       const blockedHours = blockedTime.date.getHours()
       const blockedMinutes = blockedTime.date.getMinutes()
+      const timeHours = Math.floor(time)
+      const timeMinutes = (time - timeHours) * 60
+
       return (
-        blockedHours === Math.floor(time) &&
-        (blockedMinutes === 0 || blockedMinutes === 30)
+        blockedHours === timeHours &&
+        (blockedMinutes === timeMinutes || blockedMinutes === timeMinutes + 30)
       )
     })
   })
-
-  console.log('aaaa', availableTimes)
 
   return res.json({ possibleTimes, availableTimes })
 }

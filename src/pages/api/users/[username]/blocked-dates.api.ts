@@ -44,16 +44,31 @@ export default async function handler(
     )
   })
 
-  const blockedDatesRaw = await prisma.$queryRaw`
+  // retorna todos os dias que estão com todos os horários ocupados
+  const blockedDatesRaw: Array<{ date: number }> = await prisma.$queryRaw`
     SELECT
-      EXTRACT(DAY FROM S.date) As date
+      EXTRACT(DAY FROM S.date) As date,
+      COUNT(S.date) as amount,
+      ((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 30) AS size
+
     FROM schedulings S
+
+    LEFT JOIN user_time_intervals UTI
+      -- no js a semana começa com 1, no mysql começa com 0, precisa adaptar
+      ON UTI.week_day = WEEKDAY(DATE_ADD(S.date, INTERVAL 1 DAY))
 
     WHERE S.user_id = ${user.id}
       AND DATE_FORMAT(S.date, "%Y-%m") = ${`${year}-${month}`}
 
-    GROUP BY EXTRACT(DAY FROM S.date)
-  `
+    GROUP BY EXTRACT(DAY FROM S.date),
+      ((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 30)
 
-  return res.json({ blockedWeekDays, blockedDatesRaw })
+    -- amount: todos os horários agendados | size: todos os horários disponíveis 
+    -- se amount for igual a size, significa que nao tem mais horários disponíveis
+    HAVING amount >= size
+  `
+  // pega só os dias ocupados
+  const blockedDates = blockedDatesRaw.map((item) => item.date)
+
+  return res.json({ blockedWeekDays, blockedDates })
 }

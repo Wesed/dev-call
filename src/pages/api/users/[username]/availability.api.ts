@@ -79,7 +79,8 @@ export default async function handler(
 
       return (
         blockedHours === timeHours &&
-        (blockedMinutes === timeMinutes || blockedMinutes === timeMinutes + 30)
+        blockedMinutes >= timeMinutes &&
+        blockedMinutes < timeMinutes + 30
       )
     })
 

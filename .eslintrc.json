@@ -5,7 +5,7 @@
   ],
   "overrides": [
   {
-    "files": ["*.api.ts"],
+    "files": ["*.ts"],
     "rules": {
       "camelcase": "off"
     }

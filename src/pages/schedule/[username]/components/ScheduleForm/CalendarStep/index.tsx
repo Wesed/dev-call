@@ -68,6 +68,8 @@ export function CalendarStep({ onSelectedDateTime }: CalendarStepProps) {
     onSelectedDateTime(dateWithTime)
   }
 
+  console.log(availability)
+
   return (
     <Container isTimePickerOpen={isDateSelected}>
       <Calendar selectedDate={selectedDate} onDateSelected={setSelectedDate} />

@@ -28,6 +28,7 @@ export default async function handler(
   }
 
   const referenceDate = dayjs(String(date))
+
   const isPastDate = referenceDate.endOf('day').isBefore(new Date())
 
   // se a data estiver no passado, retorna um array vazio (sem disponibilidade)
@@ -84,7 +85,20 @@ export default async function handler(
       )
     })
 
-    const isTimeInPast = referenceDate.set('hour', time).isBefore(new Date())
+    // verifica se a hora ja passou
+
+    const currentTime = dayjs()
+    const currentHours = Math.floor(time)
+    const currentMinutes = Math.floor((time - currentHours) * 60)
+
+    const compareTime = currentTime
+      .set('hour', currentHours)
+      .set('minute', currentMinutes)
+
+    const isSameDay = currentTime.isSame(referenceDate, 'day')
+
+    // se a hora ja passou E o dia é o mesmo, retorna
+    const isTimeInPast = compareTime.isBefore(currentTime) && isSameDay
 
     // so retorna horários disponíveis e que nao passaram
     return !isTimeBlocked && !isTimeInPast

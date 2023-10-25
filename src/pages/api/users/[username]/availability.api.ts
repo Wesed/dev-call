@@ -85,8 +85,7 @@ export default async function handler(
       )
     })
 
-    // verifica se a hora ja passou
-
+    // verifica se a hora ja passou e o dia é o mesmo
     const currentTime = dayjs()
     const currentHours = Math.floor(time)
     const currentMinutes = Math.floor((time - currentHours) * 60)
